@@ -49,7 +49,7 @@ html, body, body *, input, button, select, textarea {
   font-family: Georgia, "Times New Roman", serif !important;
 }
 .combined-exam-header {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 20;
   background: var(--burg);
@@ -167,6 +167,117 @@ button, input, select, textarea {
 }
 </style>
 
+
+<style id="fixed-header-question-cards">
+/* Permanent exam header */
+.combined-exam-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 10000 !important;
+}
+
+/* Keep the page content below the permanent header. */
+body {
+  padding-top: 86px;
+}
+
+/* Separate every individual question into a card. */
+.question,
+.mcq,
+.question-card,
+.mcq-card,
+[class*="question-card"] {
+  border: 1px solid rgba(128, 128, 128, 0.30) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  margin: 0 0 14px 0 !important;
+  background: var(--card-bg, rgba(255,255,255,.92)) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07) !important;
+}
+
+/* Avoid accidental double-card styling on nested answer/explanation elements. */
+.question .question,
+.mcq .mcq,
+.question-card .question-card,
+.mcq-card .mcq-card {
+  border: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Mobile spacing */
+@media (max-width:700px) {
+  body {
+    padding-top: 92px;
+  }
+  .question,
+  .mcq,
+  .question-card,
+  .mcq-card,
+  [class*="question-card"] {
+    border-radius: 12px !important;
+    padding: 12px !important;
+    margin-bottom: 11px !important;
+  }
+}
+</style>
+
+
+<style id="question-light-gray-only">
+/* Light gray only on the question card itself; options remain unchanged. */
+.question,
+.mcq,
+.question-card,
+.mcq-card,
+[class*="question-card"] {
+  background: #f1f1f1 !important;
+}
+</style>
+
+
+
+
+
+<style id="question-text-bar-visible">
+/* Question cards themselves stay transparent/normal. */
+.question,
+.mcq,
+.question-card,
+.mcq-card,
+[class*="question-card"] {
+  background: transparent !important;
+}
+
+/* Visible light-gray bar around the question stem only. */
+.question .question-text,
+.mcq .question-text,
+.question-card .question-text,
+.mcq-card .question-text,
+.question .qtext,
+.mcq .qtext,
+.question-card .qtext,
+.mcq-card .qtext,
+.question > h3:first-child,
+.question > h4:first-child,
+.question > p:first-child,
+.mcq > h3:first-child,
+.mcq > h4:first-child,
+.mcq > p:first-child {
+  display: block !important;
+  width: 100% !important;
+  background: #e6e6e6 !important;
+  border: 1px solid #d0d0d0 !important;
+  border-radius: 9px !important;
+  padding: 11px 13px !important;
+  margin: 0 0 12px 0 !important;
+  box-sizing: border-box !important;
+}
+</style>
+
 </head>
 <body>
 <header class="combined-exam-header">
@@ -176,7 +287,7 @@ button, input, select, textarea {
       <div class="exam-subtitle">by Dr. Ahmar Shakoor</div>
       <div class="exam-meta">200 Questions · 200 Minutes · Passing Score 60% (120/200)</div>
     </div>
-    <button class="primary" onclick="submitExam()">Done / Show Result</button>
+    <button class="primary" onclick="submitExam()">Done</button>
   </div>
 </header>
 
@@ -190,7 +301,7 @@ button, input, select, textarea {
 <div class="intro" id="start">
 <h1>National Registration Examination (NRE) Theory Mock</h1>
 <p>Scrollable full exam — all questions are shown on one page.</p>
-<p><b>Instructions:</b> Select one answer for each question, then press <b>Done / Show Result</b>.</p>
+<p><b>Instructions:</b> Select one answer for each question, then press <b>Done</b>.</p>
 <div class="controls"><button class="control" onclick="expandAll()">⌄ Expand All</button><button class="control" onclick="collapseAll()">⌃ Collapse All</button></div>
 </div>
 <div id="result" class="result results-screen">
